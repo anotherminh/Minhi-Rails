@@ -1,0 +1,14 @@
+<%= flash['notice'].join("<br>") if flash['notice'] %>
+
+<form action="/cats" method="POST">
+  <input type="hidden" name="form_token" value="<%= form_auth_token %>">
+  <label>Name
+    <input type="text" name="cat[name]" value="<%= @cat.name %>">
+  </label>
+
+  <label>Owner
+    <input type="text" name="cat[owner]" value="<%= @cat.owner %>">
+  </label>
+
+  <input type="submit">
+</form>
