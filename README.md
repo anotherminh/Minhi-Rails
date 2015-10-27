@@ -27,34 +27,38 @@ Any CSS Styling can be included by linking to the file from your view (html), li
 I used recursion to build nested params from query strings. I used URI to first parse
 the query string into 2D array, like so:
 
-`"user[address][street]=main&user[address][zip]=89436"
-#=> [["user[address][street]", "main"], ["user[address][zip]", "89436"]]`
+`"user[address][street]=main&user[address][zip]=89436" => [["user[address][street]", "main"], ["user[address][zip]", "89436"]]`
 
 Then, as I iterate through each element in this array,
 I call on a helper function that retrieves all the nested keys.
 Given "['user[address][street]', 'main']", it
 should return ['user', 'address', 'street'].
 
-`def parse_key(key)
-  key.split(/\]\[|\[|\]/)
-end`
+<code>
+  def parse_key(key)
+    key.split(/\]\[|\[|\]/)
+  end
+</code>
 
 The fun part is when I use recursion to build the nested hash,
 using the flattened keys and value:
 
-`def build_nested_hash(hash, keys, value)
+<code>
+def build_nested_hash(hash, keys, value)
   if keys.count == 1
     hash[keys.shift] = value
   else
     hash[keys.shift] = build_nested_hash({}, keys, value)
   end
   hash
-end`
+end
+</code>
 
 So, each element gets their own nested hash, and is then deep-merged together
 to create the hash for the entire query string:
 
-`def parse_www_encoded_form(www_encoded_form)
+<code>
+def parse_www_encoded_form(www_encoded_form)
   ary = URI.decode_www_form(www_encoded_form)
   hash = {}
   ary.each do |k_vpair|
@@ -64,4 +68,5 @@ to create the hash for the entire query string:
     hash = deep_merge(hash, new_hash)
   end
   hash
-end`
+end
+</code>
