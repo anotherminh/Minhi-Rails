@@ -27,7 +27,10 @@ Any CSS Styling can be included by linking to the file from your view (html), li
 I used recursion to build nested params from query strings. I used URI to first parse
 the query string into 2D array, like so:
 
-`"user[address][street]=main&user[address][zip]=89436" => [["user[address][street]", "main"], ["user[address][zip]", "89436"]]`
+<pre><code>
+"user[address][street]=main&user[address][zip]=89436"
+=> [["user[address][street]", "main"], ["user[address][zip]", "89436"]]
+</code></pre>
 
 Then, as I iterate through each element in this array,
 I call on a helper function that retrieves all the nested keys.
@@ -43,7 +46,7 @@ should return ['user', 'address', 'street'].
 The fun part is when I use recursion to build the nested hash,
 using the flattened keys and value:
 
-<code>
+<pre><code>
 def build_nested_hash(hash, keys, value)
   if keys.count == 1
     hash[keys.shift] = value
@@ -52,12 +55,12 @@ def build_nested_hash(hash, keys, value)
   end
   hash
 end
-</code>
+</code></pre>
 
 So, each element gets their own nested hash, and is then deep-merged together
 to create the hash for the entire query string:
 
-<code>
+<pre><code>
 def parse_www_encoded_form(www_encoded_form)
   ary = URI.decode_www_form(www_encoded_form)
   hash = {}
@@ -69,4 +72,4 @@ def parse_www_encoded_form(www_encoded_form)
   end
   hash
 end
-</code>
+</code></pre>
