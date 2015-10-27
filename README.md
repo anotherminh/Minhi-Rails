@@ -34,11 +34,11 @@ I call on a helper function that retrieves all the nested keys.
 Given "['user[address][street]', 'main']", it
 should return ['user', 'address', 'street'].
 
-<code>
+<pre><code>
   def parse_key(key)
     key.split(/\]\[|\[|\]/)
   end
-</code>
+</code></pre>
 
 The fun part is when I use recursion to build the nested hash,
 using the flattened keys and value:
