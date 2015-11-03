@@ -61,7 +61,7 @@ So, each element gets their own nested hash, and is then deep-merged together
 to create the hash for the entire query string:
 
 <pre><code>
-def parse_www_encoded_form(www_encoded_form)
+gitdef parse_www_encoded_form(www_encoded_form)
   ary = URI.decode_www_form(www_encoded_form)
   hash = {}
   ary.each do |k_vpair|
